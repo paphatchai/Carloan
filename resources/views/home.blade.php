@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-sm-6 col-lg-3">
             <a class="card" href="javascript:void(0)">
-                <div class="card-block clearfix">
+                <div class="card-block clearfix" style="background:#f8d949">
                     <div class="pull-right">
                         <p class="h6 text-muted m-t-0 m-b-xs">แจ้งเตือน</p>
                         <p class="h3 text-blue m-t-sm m-b-0">{{count($datamain)}}</p>
@@ -63,7 +63,7 @@
         <!-- .col-sm-6 -->
 
         <div class="col-sm-6 col-lg-3">
-            <a class="card bg-purple bg-inverse" href="{{ url('/logout') }}" style="background-color:#f44336">
+            <a class="card bg-purple bg-inverse" href="{{ url('/logout') }}" style="background-color:#818589">
                 <div class="card-block clearfix">
                     <div class="pull-right">
                         <p class="h6 text-muted m-t-0 m-b-xs">ออกจากระบบ</p>

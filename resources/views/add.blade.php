@@ -1,7 +1,12 @@
 @extends('layouts.dashboard')
 
 @section('content')
-
+<div class="loading" style="display:none">
+    <img src="{{asset('image/Spin-1s-200px.gif')}}" style="position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;">
+</div>
 <!-- Page Content -->
  <!-- Page Content -->
  <div class="container-fluid p-y-md">
@@ -17,7 +22,7 @@
                 </div>
                 <div class="card-block">
                <!--     <form class="form-horizontal m-t-xs" action="http://u715713640.hostingerapp.com/public/blogs/store" method="post"> -->
-                         <form method="POST" action="{{ url('/insert') }}" accept-charset="UTF-8" class="form-horizontal m-t-xs" enctype="multipart/form-data">
+                         <form method="POST" action="{{ url('/insert') }}" accept-charset="UTF-8" class="form-horizontal m-t-xs" enctype="multipart/form-data" onsubmit="$('.loading').show()">
 
                             @csrf
                         <div class="col-xs-6">

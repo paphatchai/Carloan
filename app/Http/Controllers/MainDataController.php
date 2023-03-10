@@ -46,6 +46,18 @@ class MainDataController extends Controller
         }
         return $result;
     }
+    public function destroy($id)
+    {
+        $temp = maindatum::findOrFail($id);
+        $attachment = attachment::where('maindata_id',$id)->get();
+        foreach ($attachment as $key => $value) {
+            unlink(public_path().'/attachment/'.$value->path);
+        }
+        
+        maindatum::destroy($id);
+        unlink(public_path().'/images/'.$temp->image);
+        return redirect('/listing');
+    }
     public function insert(Request $request)
     {   //upload image
         $image = $request->file('image');
@@ -74,18 +86,21 @@ class MainDataController extends Controller
         //upload attachment
         if($request->hasFile('attachment')){
             $count = $request->file('attachment');
+            
             $description = $request->get('attachName'); // assign array of descriptions
             $attachment = $request->file('attachment'); // assign array of images
             $num = count($count);
+            
             for($i = 0; $i < $num; $i++) {
                 if(isset($attachment[$i])){
                     $attfile = $attachment[$i];
-                    $filenames = time().rand(1, 999).rand(1, 999).'.'.$attfile->getClientOriginalExtension();                
+                    $filenames = time().rand(1, 999).rand(1, 999).'.'.$attfile->getClientOriginalExtension(); 
+                                
                     $attfile->move( public_path().'/attachment/',$filenames); 
-                    
+                      
                     $attachments = new attachment;
                     $attachments->path = $filenames;
-                    $attachments->name = $description[$i];
+                    $attachments->name = $filenames;
                     $attachments->maindata_id = $data->id;
                     $attachments->save();
                 }
@@ -110,7 +125,7 @@ class MainDataController extends Controller
         $history->staff_id = Auth::user()->id;
         $history->save();
 
-        return redirect('/detail/'.$data->id);
+        return redirect('/listing/');
     }
 
     public function listing(Request $request)
@@ -174,6 +189,7 @@ class MainDataController extends Controller
             $image = $request->file('image');
             $filename = time().rand(1, 999).rand(1, 999).'.'.$image->getClientOriginalExtension();                
             $image->move( public_path().'/images/',$filename); 
+            unlink(public_path().'/images/'.$old->image);
         }
         $message="";
         if($old->status!=$request->status){$message=$message."แก้ไขสถานะบัญชีจาก:".($old->status==1?"เปิดบัญชี":"ปิดบัญชี")." เป็น:".($request->status=="1"?"เปิดบัญชี":"ปิดบัญชี")."</br>"; }

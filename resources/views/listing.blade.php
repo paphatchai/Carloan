@@ -64,27 +64,38 @@
                                     <td class="font-500">ชื่อ</td>
                                     <td class="hidden-xs font-500"> ประเภท </td>
                                     <td class="hidden-xs font-500">ยอดชำระ</td>
+                                    <td class="hidden-xs font-500"></td>
                                 </tr>
                                 <?php $num = 1;?>
                                 @foreach ($data as $item)
                                 
-                                <tr style="{{$item->status==0?'color:red;':''}}" onclick="location.href='{{ url('/detail/'.$item->id) }}'">
-                                    <td class="hidden-xs text-center">
+                                <tr style="{{$item->status==0?'color:red;':''}}" >
+                                    <td class="hidden-xs text-center" onclick="location.href='{{ url('/detail/'.$item->id) }}'">
                                         <label class="css-input css-checkbox css-checkbox-default">
                                         <span>{{$num}}</span>
                                         </label>
                                     </td>
-                                    <td class="font-200"><img src="{{asset('images/'.$item->image)}}" width="180px" height="100px"></td>
-                                    <td class="font-300">{{$item->code}}</td>
-                                    <td class="font-300">{{date('d/m/Y', strtotime($item->date))}}</td>
-                                    <td class="font-300">{{$item->name}}</td>
-                                    <td>
+                                    <td class="font-200" onclick="location.href='{{ url('/detail/'.$item->id) }}'"><img src="{{asset('images/'.$item->image)}}" width="180px" height="100px"></td>
+                                    <td class="font-300" onclick="location.href='{{ url('/detail/'.$item->id) }}'">{{$item->code}}</td>
+                                    <td class="font-300" onclick="location.href='{{ url('/detail/'.$item->id) }}'">{{date('d/m/Y', strtotime($item->date))}}</td>
+                                    <td class="font-300" onclick="location.href='{{ url('/detail/'.$item->id) }}'">{{$item->name}}</td>
+                                    <td onclick="location.href='{{ url('/detail/'.$item->id) }}'">
                                         <div class="hidden-xs text-muted">                                                                                                                                                                                                                                                                                                                                                                                                   
                                                 {{$item->type}}                                                                                                                                               
                                         </div>
                                     </td>
-                                    <td class="text-muted"><div class="text-muted">{{ number_format($item->interest, 0) }}</div></td>
-                                    
+                                    <td class="text-muted" onclick="location.href='{{ url('/detail/'.$item->id) }}'"><div class="text-muted">{{ number_format($item->interest, 0) }}</div></td>
+                                    <td style="width:50px">
+                                    @if(!Auth::check())
+                           
+                                    @else
+                                        @if(Auth::user()->level==0)
+                                            <a href="{{ url('/delete/'.$item->id) }}"  onclick="return confirm('คุณแน่ใจหรือไม่ที่จะลบข้อมูลนี้ออกจากระบบ?')">
+                                                <input type="button" value="ลบ" class="btn btn-app-red" >
+                                            </a>
+                                        @endif
+                                    @endif
+                                    </td>
                                 </tr>
                                 <?php $num ++;?>
                                 @endforeach                          

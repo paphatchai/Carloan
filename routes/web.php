@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout','Auth\LoginController@logout');
+/*
 Route::get('admin', 'Admin\AdminController@index');
 Route::resource('admin/roles', 'Admin\RolesController');
 Route::resource('admin/permissions', 'Admin\PermissionsController');
@@ -36,10 +37,11 @@ Route::resource('admin/cartype', 'Admin\\cartypeController');
 Route::resource('admin/transaction', 'Admin\\transactionController');
 Route::resource('admin/history', 'Admin\\HistoryController');
 Route::resource('admin/attachment', 'Admin\\attachmentController');
-
+*/
 Route::get('/add', 'MainDataController@add');
 Route::post('/insert', 'MainDataController@insert');
 Route::get('/listing', 'MainDataController@listing');
+Route::get('/delete/{id}', 'MainDataController@destroy');
 Route::get('/detail/{id}', 'MainDataController@detail');
 Route::post('/insertTransectionNext', 'TransectionController@insertnext');
 Route::post('/edittransection', 'TransectionController@edittransection');
